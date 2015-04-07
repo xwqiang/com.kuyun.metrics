@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="consoleReport" class="com.kuyun.matics.sink.ConsoleReport">
+	</bean>
+
+	<!-- 过滤器 matric对应的统计启动的时候运行一次 -->
+	<bean id="filterChain" class="com.kuyun.matics.filter.FilterChain">
+		<!-- java.util.List -->
+		<property name="filters">
+			<list>
+				<ref bean="defaultFilter" />
+<!-- 				<ref bean="consoleFilter" /> -->
+			</list>
+		</property>
+	</bean>
+	<bean id="defaultFilter" class="com.kuyun.matics.filter.DefaultMetricsFilter"/>
+	<bean id="consoleFilter" class="com.kuyun.matics.filter.ConsoleMetricsFilter"/>
+	<bean id="timer" class="com.kuyun.matics.core.TimePolice">
+		<property name="intervalMillis" value="2000" />
+		<property name="startMillis" value="0" />
+	</bean>
+</beans>
